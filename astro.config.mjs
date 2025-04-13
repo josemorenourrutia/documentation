@@ -10,12 +10,19 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
+  redirects: {
+    "/": "/es",
+  },
 
   integrations: [starlight({
     title: 'TeiDSpace',
     // Set English as the default language for this site.
     defaultLocale: 'es',
     locales: {
+      // root: {
+      //   label: 'Español',
+      //   lang: 'es',
+      // },
       // Español docs in `src/content/docs/es/`
       es: {
         label: 'Español',
