@@ -4,9 +4,14 @@ description: Aprende más sobre mi proyecto en este sitio de documentación cons
 sidebar:
   order: 0
 ---
+
+import { Aside } from '@astrojs/starlight/components';
+
 import Three from '../../../components/Three.astro';
 
-<Three />
+<Aside type="caution" title="Watch out!">
+  <Three />
+</Aside>
 
 import { FileTree } from '@astrojs/starlight/components';
 
@@ -32,6 +37,177 @@ import { FileTree } from '@astrojs/starlight/components';
 
 </FileTree>
 
+Esta es una referencia [^1].
+
+Y esta es una referencia [^2].
+
+- [x] Primera tarea
+- [ ] Segunda tarea
+- [ ] Tercera tarea
+
+El siguiente <u>texto debería subrayarse</u>
 
 
 ¡Bienvenido a mi proyecto!
+
+<Aside>Some content in an aside.</Aside>
+
+<Aside type="caution">Some cautionary content.</Aside>
+
+<Aside type="tip">
+
+Other content is also supported in asides.
+
+```js
+// A code snippet, for example.
+```
+
+</Aside>
+
+<Aside type="danger">Do not give your password to anyone.</Aside>
+
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+1. Import the component into your MDX file:
+
+   ```js
+   import { Steps } from '@astrojs/starlight/components';
+   ```
+
+2. Wrap `<Steps>` around your ordered list items.
+
+</Steps>
+
+
+The Starlight TypeDoc plugin can be configured inside the `astro.config.mjs` configuration file of your project:
+
+```js {11}
+// astro.config.mjs
+import starlight from '@astrojs/starlight'
+import { defineConfig } from 'astro/config'
+import starlightTypeDoc, { typeDocSidebarGroup } from 'starlight-typedoc'
+
+export default defineConfig({
+  integrations: [
+    starlight({
+      plugins: [
+        starlightTypeDoc({
+          // Configuration options go here.
+        }),
+      ],
+      title: 'My Docs',
+    }),
+  ],
+})
+```
+
+## Configuration options
+
+You can pass the following options to the Starlight TypeDoc plugin.
+
+### `entryPoints` (required)
+
+**Type:** `string[]`
+
+The path(s) to the entry point(s) to document.
+
+### `tsconfig` (required)
+
+**Type:** `string`
+
+The path to the `tsconfig.json` file to use for the documentation generation.
+
+### `output`
+
+**Type:** `string`  
+**Default:** `'api'`
+
+The output directory containing the generated documentation markdown files relative to the `src/content/docs/` directory.
+
+### `pagination`
+
+**Type:** `boolean`  
+**Default:** `false`
+
+Whether the footer should include previous and next page links for the generated documentation.
+
+### `sidebar`
+
+**Type:** [`StarlightTypeDocSidebarOptions`](#sidebar-configuration)
+
+The generated documentation [sidebar configuration](#sidebar-configuration).
+
+### `typeDoc`
+
+**Type:** `TypeDocConfig`
+
+Additional [TypeDoc](https://typedoc.org/options) or [typedoc-plugin-markdown](https://github.com/tgreyuk/typedoc-plugin-markdown/blob/next/packages/typedoc-plugin-markdown/docs/usage/options.md) configuration to override the [default settings](https://github.com/HiDeoo/starlight-typedoc/blob/main/packages/starlight-typedoc/libs/typedoc.ts#L21-L28) used by the plugin.
+
+:::note
+When using TypeDoc [`packages`](https://typedoc.org/options/input/#packages) entry point strategy, all entry points should be directories that may contain their own TypeDoc configuration.
+As documented in the [TypeDoc documentation](https://typedoc.org/options/input/#packages), the root configuration provided by this plugin will not be copied or merged with the entry point configuration.
+:::
+
+### `watch`
+
+**Type:** `boolean`  
+**Default:** `false`
+
+Whether to watch the entry point(s) for changes and regenerate the documentation when needed.
+
+### `errorOnEmptyDocumentation`
+
+**Type:** `boolean`  
+**Default:** `true`
+
+Whether the plugin should error when no TypeDoc documentation is generated.
+
+By default, the plugin will error when no TypeDoc documentation is generated.
+Setting this option to `false` will prevent the plugin from erroring in this case.
+This can be useful when generating documentation for multiple entry points and only some of them contain documented code at a given time.
+
+## Sidebar configuration
+
+The sidebar configuration is an object with the following properties:
+
+### `collapsed`
+
+**Type:** `boolean`  
+**Default:** `false`
+
+Wheter the generated documentation sidebar group should be collapsed by default.
+Note that nested sidebar groups are always collapsed.
+
+### `label`
+
+**Type:** `string`  
+**Default:** `'API'`
+
+The generated documentation sidebar group label.
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Cabecera 1</th>
+      <th>Cabecera 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Elem 1, 1</td>
+      <td>Elem 1, 2</td>
+    </tr>
+    <tr>
+      <td>Elem 1, 2</td>
+      <td>Elem 2, 2</td>
+    </tr>
+  </tbody>
+</table>
+
+
+[^1]: Nota de la primera referencia.
+[^2]: Nota de la segunda referencia.

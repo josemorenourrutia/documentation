@@ -1,0 +1,3 @@
+astro preferences disable devToolbar
+
+astro preferences enable devToolbar
